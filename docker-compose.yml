@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   chat:
-    image: 'Benacka/NodejsChatApp'
+    image: 'Benacka/nodejschatapp'
     environment:
     - "PORT:3000"
     ports:
