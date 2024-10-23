@@ -38,7 +38,7 @@ pipeline
       {
          script
          {
-            def app = docker.build("Benacka/NodejsChatApp")
+            def app = docker.build("benacka/nodejschatapp")
             app.tag("latest")
          }
       }
@@ -56,7 +56,7 @@ pipeline
          {
             docker.withRegistry("https://registry.hub.docker.com", "dockerhub_credentials")
             {
-                def app = docker.image("Benacka/NodejsChatApp")
+                def app = docker.image("benacka/nodejschatapp")
                 app.push("latest")
  
             }
