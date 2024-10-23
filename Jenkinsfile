@@ -1,75 +1,87 @@
-pipeline {
+pipeline
+{
   agent none
-
+ 
   stages
-}
+  {
     stage('CLONE GIT REPOSITORY')
     {
-    agent
+      agent
       {
         label 'ubuntu-Appserver-2'
-      }  
+      }
       steps
       {
-        checkout scm  
+        checkout scm
       }
     }
+ 
     stage('SCA-SAST-SNYK-TEST')
     {
-    agent
+      agent
       {
-        label 'ubuntu-Appserverver-2'
-      }  
+        label 'ubuntu-Appserver-2'
+      }
       steps
       {
         echo "SNYK-TEST"
       }
     }
-    stage('BUILD-AND-TAG')
+ 
+     stage('BUILD-AND-TAG')
     {
-    agent
+      agent
       {
         label 'ubuntu-Appserver-2'
-      } 
-    steps
-    {
-        script
-        {
+      }
+      steps
+      {
+         script
+         {
             def app = docker.build("Benacka/NodejsChatApp")
             app.tag("latest")
-        }
+         }
+      }
     }
-    stage('POST-TO-DOCKERHUB')
+ 
+      stage('POST-TO-DOCKERHUB')
     {
-    agent
+      agent
       {
         label 'ubuntu-Appserver-2'
-      } 
-    steps
-    {
-        script
-        {
+      }
+      steps
+      {
+         script
+         {
             docker.withRegistry("https://registry.hub.docker.com", "dockerhub_credentials")
             {
                 def app = docker.image("Benacka/NodejsChatApp")
                 app.push("latest")
+ 
             }
-        }
+           
+         }
+      }
     }
-  }
-
-stage('DEPLOYMENT')
+ 
+    stage('DEPLOYMENT')
     {
-    agent
+      agent
       {
         label 'ubuntu-Appserver-2'
-      }  
+      }
       steps
       {
         sh "docker-compose down"
         sh "docker-compose up -d"
       }
     }
-
-
+ 
+   
+   
+  }
+ 
 }
+ 
+ 
