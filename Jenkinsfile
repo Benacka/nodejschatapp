@@ -38,7 +38,7 @@ pipeline
       {
          script
          {
-            def app = docker.build("benacka/nodejschatapp")
+            def app = docker.build("benjast/nodejschatapp")
             app.tag("latest")
          }
       }
