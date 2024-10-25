@@ -46,21 +46,11 @@ pipeline
  
       stage('POST-TO-DOCKERHUB')
     {
-      agent
-      {
-        label 'ubuntu-Appserver-2'
-      }
-      steps
-      {
-         script
-         {
-            docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_credentials2')
-            {
-                app.push("latest")
-            }
+          docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_credentials2')
+          {
+              app.push("latest")
+          }
            
-         }
-      }
     }
  
     stage('DEPLOYMENT')
