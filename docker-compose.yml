@@ -1,8 +1,8 @@
-version: "2.4"
+version: '2.4'
 services:
   apache:
     image: 'Benacka/nodejschatapp'
     ports:
-    - "80:80"
+    - '80:80'
     volumes:
-    - . /usr/local/apache2/htdocs/
+    - ./:/usr/local/apache2/htdocs
