@@ -59,11 +59,14 @@ pipeline
       }
     }
  
-    stage('DEPLOYMENT')
+      stage('DEPLOYMENT')
     {
+      steps
+      {
         sh "docker-compose down"
-        sh "docker-compose up -d"  
-    }
+        sh "docker-compose up -d"
+      }
+    }   
   } 
 }
  
