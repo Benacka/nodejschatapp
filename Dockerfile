@@ -1,7 +1,2 @@
-FROM mhart/alpine-node
-
-COPY . /app
-
-CMD node /app/app.js
-
-EXPOSE 3000
+FROM httpd:2.4
+COPY . /usr/local/apache2/htdocs/
