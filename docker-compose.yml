@@ -4,6 +4,6 @@ services:
     image: httpd:latest
     container_name: nodejschatapp
     ports:
-    - '95:95'
+    - '80:80'
     volumes:
     - ./:/usr/local/apache2/htdocs
