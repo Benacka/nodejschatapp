@@ -56,9 +56,7 @@ pipeline
          {
             docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_credentials')
             {
-                def app = docker.image("Benacka/nodejschatapp")
                 app.push("latest")
-
             }
            
          }
