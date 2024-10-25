@@ -52,7 +52,7 @@ pipeline
          {
             docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_credentials2')
             {
-              def app = docker.image("benacka/nodejschatapp")
+              def app = docker.image("benjast/nodejschatapp")
               app.push('latest')
             }
          }
