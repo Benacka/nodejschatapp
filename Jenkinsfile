@@ -61,16 +61,9 @@ pipeline
  
     stage('DEPLOYMENT')
     {
-      agent
-      {
-        label 'ubuntu-Appserver-2'
-      }
-      steps
-      {
         sh "docker-compose down"
-        sh "docker-compose up -d"
-      }
-    }   
+        sh "docker-compose up -d"  
+    }
   } 
 }
  
