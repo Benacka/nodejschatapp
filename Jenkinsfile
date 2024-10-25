@@ -46,7 +46,7 @@ pipeline
  
       stage('POST-TO-DOCKERHUB')
     {
-        script
+        steps
       {
             docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_credentials2')
             {
