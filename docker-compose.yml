@@ -1,7 +1,8 @@
 version: '2.4'
 services:
   apache:
-    image: 'Benacka/nodejschatapp'
+    image: httpd:latest
+    container_name: nodejschatapp
     ports:
     - '80:80'
     volumes:
