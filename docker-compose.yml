@@ -2,7 +2,6 @@ version: '3.3'
 services:
   app:
     image: httpd:latest
-    container_name: nodejschatapp
     environment:
     - "PORT:3000"
     ports:
