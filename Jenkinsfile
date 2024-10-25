@@ -3,7 +3,7 @@ pipeline
   agent none
  
   stages
-  {
+    {
     stage('CLONE GIT REPOSITORY')
     {
       agent
@@ -70,12 +70,8 @@ pipeline
         sh "docker-compose down"
         sh "docker-compose up -d"
       }
-    }
- 
-   
-   
-  }
- 
+    }   
+  } 
 }
  
  
