@@ -1,10 +1,10 @@
 version: '3.3'
 services:
   app:
-    image: httpd:latest
+    image: 'Benacka/nodejschatapp'
     environment:
     - "PORT:3700"
     ports:
-    - 75:3700
+    - 80:3700
     volumes:
     - ./:/app
