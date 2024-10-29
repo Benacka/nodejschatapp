@@ -1,81 +1,124 @@
-pipeline
-{
-  agent none
+// pipeline
+// {
+//   agent none
  
-  stages
+//   stages
+//     {
+//     stage('CLONE GIT REPOSITORY')
+//     {
+//       agent
+//       {
+//         label 'ubuntu-Appserver-2'
+//       }
+//       steps
+//       {
+//         checkout scm
+//       }
+//     }
+ 
+//     stage('SCA-SAST-SNYK-TEST')
+//     {
+//       agent
+//       {
+//         label 'ubuntu-Appserver-2'
+//       }
+//       steps
+//       {
+//         snykSecurity(
+//             snykInstallation: 'Snyk',
+//             snykTokenId: 'SNYKID',
+//             severity: 'critical'
+//           )
+//       }
+//     }
+ 
+//      stage('BUILD-AND-TAG')
+//     {
+//       agent
+//       {
+//         label 'ubuntu-Appserver-2'
+//       }
+//       steps
+//       {
+//          script
+//          {
+//             def app = docker.build("benjast/nodejschatapp")
+//             app.tag('latest')
+//          }
+//       }
+//     }
+ 
+//       stage('POST-TO-DOCKERHUB')
+//     {
+//         steps
+//       {
+//          script
+//          {
+//             docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_credentials2')
+//             {
+//               def app = docker.image("benjast/nodejschatapp")
+//               app.push('latest')
+//             }
+//          }
+//       }
+//     }
+ 
+//       stage('DEPLOYMENT')
+//     {
+//       agent
+//       {
+//         label 'ubuntu-Appserver-2'
+//       }
+//       steps
+//       {
+//         sh "docker-compose down"
+//         sh "docker-compose up -d"
+//       }
+//     }   
+//   } 
+// }
+
+
+
+node('ubuntu-Appserver-2')
+{
+    def app
+    stage('Cloning Git')
     {
-    stage('CLONE GIT REPOSITORY')
-    {
-      agent
-      {
-        label 'ubuntu-Appserver-2'
-      }
-      steps
-      {
-        checkout scm
-      }
+    /* Let's make sure we have the repository cloned to our workspace */
+    checkout scm
     }
  
-    stage('SCA-SAST-SNYK-TEST')
-    {
-      agent
+      stage('SCA-SAST-SNYK-TEST') 
       {
-        label 'ubuntu-Appserver-2'
-      }
-      steps
-      {
-        snykSecurity(
+       agent 
+       {
+         label 'ubuntu-Appserver-2'
+       }
+         snykSecurity(
             snykInstallation: 'Snyk',
             snykTokenId: 'SNYKID',
             severity: 'critical'
-          )
-      }
+         )
+       }
+    stage('Build-and-Tag')
+    {
+        /* This builds the actual image; 
+        * This is synonymous to docker build on the command line */
+        app = docker.build("benjast/nodejschatapp")
+    }
+    stage('Post-to-dockerhub')
+    {
+        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_credentials2')
+        {
+         app.push("latest")
+        }
     }
  
-     stage('BUILD-AND-TAG')
+    stage('Pull-image-server')
     {
-      agent
-      {
-        label 'ubuntu-Appserver-2'
-      }
-      steps
-      {
-         script
-         {
-            def app = docker.build("benjast/nodejschatapp")
-            app.tag("latest")
-         }
-      }
-    }
- 
-      stage('POST-TO-DOCKERHUB')
-    {
-        steps
-      {
-         script
-         {
-            docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_credentials2')
-            {
-              def app = docker.image("benjast/nodejschatapp")
-              app.push('latest')
-            }
-         }
-      }
-    }
- 
-      stage('DEPLOYMENT')
-    {
-      agent
-      {
-        label 'ubuntu-Appserver-2'
-      }
-      steps
-      {
         sh "docker-compose down"
         sh "docker-compose up -d"
-      }
-    }   
-  } 
+    }
+ 
 }
- 
- 
