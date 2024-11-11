@@ -110,7 +110,7 @@ node('ubuntu-Appserver-2')
                def scannerHome = tool 'SonarQubeScanner'
                withSonarQubeEnv('sonarqube') {
                    sh "${scannerHome}/bin/sonar-scanner \
-                       -Dsonar.projectKey=snakeapp \
+                       -Dsonar.projectKey=chatapp \
                        -Dsonar.sources=."
                }
            }
